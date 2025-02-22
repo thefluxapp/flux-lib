@@ -4,7 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-anyhow = "1.0.94"
+anyhow = "1.0.96"
 
 tracing = "0.1.41"
 tracing-subscriber = "0.3.19"
+
+serde = { version = "1.0.218", features = ["derive"] }
