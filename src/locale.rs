@@ -9,6 +9,8 @@ pub enum Locale {
     Ru,
 }
 
+pub type ParseError = strum::ParseError;
+
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
