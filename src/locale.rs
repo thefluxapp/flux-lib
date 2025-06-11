@@ -1,3 +1,5 @@
+use std::str::FromStr as _;
+
 use serde::Deserialize;
 use strum::{Display, EnumString};
 
@@ -9,7 +11,14 @@ pub enum Locale {
     Ru,
 }
 
-pub type ParseError = strum::ParseError;
+impl Locale {
+    pub fn new(locale: &str) -> Self {
+        match Locale::from_str(locale) {
+            Ok(locale) => locale,
+            Err(_) => Self::En,
+        }
+    }
+}
 
 #[cfg(test)]
 mod tests {
@@ -47,6 +56,15 @@ mod tests {
         let foo: Foo = serde_json::from_str(data)?;
 
         assert_eq!(foo.locale, Locale::En);
+
+        Ok(())
+    }
+
+    #[test]
+    fn parse_error() -> Result<(), Error> {
+        assert_eq!(Locale::Ru, Locale::new("ru"));
+        assert_eq!(Locale::Ru, Locale::new("RU"));
+        assert_eq!(Locale::En, Locale::new("xxx"));
 
         Ok(())
     }
